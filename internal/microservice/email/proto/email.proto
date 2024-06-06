@@ -1,0 +1,167 @@
+syntax = "proto3";
+
+option go_package = "./;proto";
+
+package proto;
+
+import "google/protobuf/timestamp.proto";
+
+// protoc --go_out=. --go-grpc_out=. --go-grpc_opt=paths=source_relative --go_opt=paths=source_relative *.proto
+
+service EmailService {
+  rpc GetAllIncoming(LoginOffsetLimit) returns(Emails) {}
+  rpc GetAllSent(LoginOffsetLimit) returns(Emails) {}
+  rpc GetDraftEmails(LoginOffsetLimit) returns(Emails) {}
+  rpc GetSpamEmails(LoginOffsetLimit) returns(Emails) {}
+  rpc GetEmailByID(EmailIdAndLogin) returns(Email) {}
+  rpc CreateEmail(Email) returns(EmailWithID) {}
+  rpc CreateProfileEmail(IdSenderRecipient) returns(EmptyEmail) {}
+  rpc CheckRecipientEmail(Recipient) returns(EmptyEmail) {}
+  rpc UpdateEmail(Email) returns(StatusEmail) {}
+  rpc DeleteEmail(LoginWithID) returns(StatusEmail) {}
+  rpc AddEmailDraft(Email) returns(EmailWithID) {}
+  rpc AddAttachment(AddAttachmentRequest) returns(AddAttachmentReply) {}
+  rpc GetFileByID(GetFileByIDRequest) returns(GetFileByIDReply) {}
+  rpc GetFilesByEmailID(GetFilesByEmailIDRequest) returns(GetFilesByEmailIDReply) {}
+  rpc DeleteFileByID(DeleteFileByIDRequest) returns(DeleteFileByIDReply) {}
+  rpc UpdateFileByID(UpdateFileByIDRequest) returns(UpdateFileByIDReply) {}
+  rpc AddFile(AddFileRequest) returns(AddFileReply) {}
+  rpc AddFileToEmail(AddFileToEmailRequest) returns(AddFileToEmailReply) {}
+}
+
+message EmailIdAndLogin {
+  uint64 id = 1;
+  string login = 2;
+}
+
+message LoginOffsetLimit {
+  string login = 1;
+  int64 offset = 2;
+  int64 limit = 3;
+}
+
+message Emails {
+  repeated Email emails = 1;
+}
+
+message Email {
+  uint64 id = 1;
+  string topic = 2;
+  string text = 3;
+  string photoID = 4;
+  bool readStatus = 5;
+  bool flag = 6;
+  bool deleted = 7;
+  google.protobuf.Timestamp dateOfDispatch = 8;
+  uint64 replyToEmailID = 9;
+  bool draftStatus = 10;
+  bool spamStatus = 11;
+  string senderEmail = 12;
+  string recipientEmail = 13;
+}
+
+message EmailWithID {
+  Email email = 1;
+  uint64 id = 2;
+}
+
+message LoginWithID {
+  string login = 1;
+  uint64 id = 2;
+}
+
+message IdSenderRecipient {
+  uint64 id = 1;
+  string sender = 2;
+  string recipient = 3;
+}
+
+message Recipient {
+  string recipient = 1;
+}
+
+message StatusEmail {
+  bool status = 1;
+}
+
+message EmptyEmail {
+
+}
+
+message File {
+  uint64 Id = 1;
+  string fileId = 2;
+  string fileType = 3;
+  string fileName = 4;
+  string fileSize = 5;
+}
+
+message AddAttachmentRequest {
+  uint64 emailId = 1;
+  string fileId = 2;
+  string fileType = 3;
+  string fileName = 4;
+  string fileSize = 5;
+}
+
+message AddAttachmentReply {
+  uint64 fileId = 1;
+}
+
+message GetFileByIDRequest {
+  uint64 fileId = 1;
+}
+
+message GetFileByIDReply {
+  File file = 1;
+}
+
+message GetFilesByEmailIDRequest {
+  uint64 emailId = 1;
+}
+
+message GetFilesByEmailIDReply {
+  repeated File files = 1;
+}
+
+message DeleteFileByIDRequest {
+  uint64 fileId = 1;
+}
+
+message DeleteFileByIDReply {
+  bool status = 1;
+}
+
+message UpdateFileByIDRequest {
+  uint64 Id = 1;
+  string newFileId = 2;
+  string newFileType = 3;
+  string newFileName = 4;
+  string newFileSize = 5;
+}
+
+message UpdateFileByIDReply {
+  bool status = 1;
+}
+
+message AddFileRequest {
+  string fileId = 1;
+  string fileType = 2;
+  string fileName = 4;
+  string fileSize = 5;
+}
+
+message AddFileReply {
+  uint64 fileId = 1;
+}
+
+message AddFileToEmailRequest {
+  uint64 emailId = 1;
+  uint64 fileId = 2;
+}
+
+message AddFileToEmailReply {
+  bool status = 1;
+}
+
+

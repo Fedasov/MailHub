@@ -1,0 +1,353 @@
+.
+├── Dockerfile
+├── Makefile
+├── README.md
+├── cmd
+│   ├── auth
+│   │   ├── Dockerfile
+│   │   └── main.go
+│   ├── configs
+│   │   ├── config.go
+│   │   ├── config.json
+│   │   ├── credentials_deploy.json
+│   │   └── credentials_localhost.json
+│   ├── email
+│   │   ├── Dockerfile
+│   │   └── main.go
+│   ├── folder
+│   │   ├── Dockerfile
+│   │   └── main.go
+│   ├── mail
+│   │   ├── main.go
+│   │   └── templates
+│   │       ├── chat.html
+│   │       └── js
+│   │           └── chat.js
+│   ├── questionnaire
+│   │   ├── Dockerfile
+│   │   ├── main.go
+│   │   └── question.sql
+│   ├── run.go
+│   ├── session
+│   │   ├── Dockerfile
+│   │   └── main.go
+│   ├── smtp
+│   │   ├── Dockerfile
+│   │   ├── emailSMTP.go
+│   │   └── main.go
+│   └── user
+│       ├── Dockerfile
+│       └── main.go
+├── db
+│   ├── migrations
+│   │   └── init.sql
+│   └── normalized
+│       └── relations.md
+├── docker-compose-cd.yml
+├── docker-compose.yml
+├── docs
+│   ├── docs.go
+│   ├── swagger.json
+│   └── swagger.yaml
+├── file_tree.txt
+├── go.mod
+├── go.sum
+├── internal
+│   ├── microservice
+│   │   ├── auth
+│   │   │   ├── mock
+│   │   │   │   └── auth_grpc_mock.go
+│   │   │   ├── proto
+│   │   │   │   ├── auth.pb.go
+│   │   │   │   ├── auth.proto
+│   │   │   │   └── auth_grpc.pb.go
+│   │   │   └── server
+│   │   │       ├── auth.go
+│   │   │       └── auth_test.go
+│   │   ├── email
+│   │   │   ├── interface
+│   │   │   │   ├── iemail_repo.go
+│   │   │   │   └── iemail_service.go
+│   │   │   ├── mock
+│   │   │   │   ├── email_grpc_mock.go
+│   │   │   │   ├── email_repository_mock.go
+│   │   │   │   └── email_service_mock.go
+│   │   │   ├── proto
+│   │   │   │   ├── email.pb.go
+│   │   │   │   ├── email.proto
+│   │   │   │   └── email_grpc.pb.go
+│   │   │   ├── repository
+│   │   │   │   ├── email_repo.go
+│   │   │   │   └── email_repo_test.go
+│   │   │   ├── server
+│   │   │   │   ├── email.go
+│   │   │   │   └── email_server_test.go
+│   │   │   └── usecase
+│   │   │       ├── email_service.go
+│   │   │       └── email_service_test.go
+│   │   ├── folder
+│   │   │   ├── interface
+│   │   │   │   ├── ifolder_repo.go
+│   │   │   │   └── ifolder_service.go
+│   │   │   ├── mock
+│   │   │   │   ├── folder_grpc_mock.go
+│   │   │   │   ├── folder_repo_mock.go
+│   │   │   │   └── folder_service_mock.go
+│   │   │   ├── proto
+│   │   │   │   ├── folder.pb.go
+│   │   │   │   ├── folder.proto
+│   │   │   │   └── folder_grpc.pb.go
+│   │   │   ├── repository
+│   │   │   │   ├── folder_repo.go
+│   │   │   │   └── folder_repo_test.go
+│   │   │   ├── server
+│   │   │   │   ├── folder.go
+│   │   │   │   └── folder_server_test.go
+│   │   │   └── usecase
+│   │   │       ├── folder_service.go
+│   │   │       └── folder_service_test.go
+│   │   ├── interceptors
+│   │   │   ├── interceptors.go
+│   │   │   └── interceptorsLog.go
+│   │   ├── models
+│   │   │   ├── domain_models
+│   │   │   │   ├── answer.go
+│   │   │   │   ├── email.go
+│   │   │   │   ├── file.go
+│   │   │   │   ├── folder.go
+│   │   │   │   ├── gender.go
+│   │   │   │   ├── question.go
+│   │   │   │   ├── session.go
+│   │   │   │   ├── statistics.go
+│   │   │   │   ├── user.go
+│   │   │   │   └── vkUser.go
+│   │   │   ├── proto_converters
+│   │   │   │   ├── email_converter.go
+│   │   │   │   ├── email_converter_test.go
+│   │   │   │   ├── file_converter.go
+│   │   │   │   ├── file_converter_test.go
+│   │   │   │   ├── folder_converter.go
+│   │   │   │   ├── folder_converter_test.go
+│   │   │   │   ├── question_answer_converter.go
+│   │   │   │   ├── question_answer_converter_test.go
+│   │   │   │   ├── session_converter.go
+│   │   │   │   ├── session_converter_test.go
+│   │   │   │   ├── user_converter.go
+│   │   │   │   └── user_converter_test.go
+│   │   │   ├── repository_converters
+│   │   │   │   ├── answer_converter.go
+│   │   │   │   ├── answer_converter_test.go
+│   │   │   │   ├── email_converter.go
+│   │   │   │   ├── email_converter_test.go
+│   │   │   │   ├── file_converter.go
+│   │   │   │   ├── file_converter_test.go
+│   │   │   │   ├── folder_converter.go
+│   │   │   │   ├── folder_converter_test.go
+│   │   │   │   ├── question_converter.go
+│   │   │   │   ├── question_converter_test.go
+│   │   │   │   ├── session_converter.go
+│   │   │   │   ├── session_converter_test.go
+│   │   │   │   ├── user_converter.go
+│   │   │   │   └── user_converter_test.go
+│   │   │   └── repository_models
+│   │   │       ├── answer.go
+│   │   │       ├── email.go
+│   │   │       ├── file.go
+│   │   │       ├── folder.go
+│   │   │       ├── profile_email.go
+│   │   │       ├── question.go
+│   │   │       ├── session.go
+│   │   │       └── user.go
+│   │   ├── questionnaire
+│   │   │   ├── interface
+│   │   │   │   ├── iquestion_repo.go
+│   │   │   │   └── iquestion_service.go
+│   │   │   ├── mock
+│   │   │   │   ├── question-answer_grpc_mock.go
+│   │   │   │   ├── question_repository_mock.go
+│   │   │   │   └── question_service_mock.go
+│   │   │   ├── proto
+│   │   │   │   ├── question-answer.pb.go
+│   │   │   │   ├── question-answer.proto
+│   │   │   │   └── question-answer_grpc.pb.go
+│   │   │   ├── repository
+│   │   │   │   ├── question_repo.go
+│   │   │   │   └── question_repo_test.go
+│   │   │   ├── server
+│   │   │   │   ├── questionnaire.go
+│   │   │   │   └── questionnaire_test.go
+│   │   │   └── usecase
+│   │   │       ├── question_service.go
+│   │   │       └── question_service_test.go
+│   │   ├── session
+│   │   │   ├── interface
+│   │   │   │   ├── isession_repo.go
+│   │   │   │   └── isession_service.go
+│   │   │   ├── mock
+│   │   │   │   ├── session_grpc_mock.go
+│   │   │   │   ├── session_repository_mock.go
+│   │   │   │   └── session_service_mock.go
+│   │   │   ├── proto
+│   │   │   │   ├── session.pb.go
+│   │   │   │   ├── session.proto
+│   │   │   │   └── session_grpc.pb.go
+│   │   │   ├── repository
+│   │   │   │   ├── session_repo.go
+│   │   │   │   └── session_repo_test.go
+│   │   │   ├── server
+│   │   │   │   ├── session.go
+│   │   │   │   └── session_server_test.go
+│   │   │   └── usecase
+│   │   │       ├── session_service.go
+│   │   │       └── session_service_test.go
+│   │   └── user
+│   │       ├── interface
+│   │       │   ├── iuser_repo.go
+│   │       │   └── iuser_service.go
+│   │       ├── mock
+│   │       │   ├── user_grpc_mock.go
+│   │       │   ├── user_repository_mock.go
+│   │       │   └── user_service_mock.go
+│   │       ├── proto
+│   │       │   ├── user.pb.go
+│   │       │   ├── user.proto
+│   │       │   └── user_grpc.pb.go
+│   │       ├── repository
+│   │       │   ├── user_repo.go
+│   │       │   └── user_repo_test.go
+│   │       ├── server
+│   │       │   ├── user.go
+│   │       │   └── user_server_test.go
+│   │       └── usecase
+│   │           ├── user_service.go
+│   │           └── user_service_test.go
+│   ├── models
+│   │   ├── delivery_converters
+│   │   │   ├── email_converter.go
+│   │   │   ├── email_converter_test.go
+│   │   │   ├── folder_converter.go
+│   │   │   ├── folder_converter_test.go
+│   │   │   ├── question_answer_converter.go
+│   │   │   ├── question_answer_converter_test.go
+│   │   │   ├── session_converter.go
+│   │   │   ├── session_converter_test.go
+│   │   │   ├── user_converter.go
+│   │   │   └── user_converter_test.go
+│   │   ├── delivery_models
+│   │   │   ├── answer.go
+│   │   │   ├── answer_easyjson.go
+│   │   │   ├── email.go
+│   │   │   ├── email_easyjson.go
+│   │   │   ├── file.go
+│   │   │   ├── folder.go
+│   │   │   ├── folder_easyjson.go
+│   │   │   ├── otherEmail.go
+│   │   │   ├── otherEmail_easyjson.go
+│   │   │   ├── otherLabel.go
+│   │   │   ├── otherLabel_easyjson.go
+│   │   │   ├── otherUser.go
+│   │   │   ├── otherUser_easyjson.go
+│   │   │   ├── question.go
+│   │   │   ├── question_easyjson.go
+│   │   │   ├── session.go
+│   │   │   ├── user.go
+│   │   │   ├── user_easyjson.go
+│   │   │   ├── vkUser.go
+│   │   │   └── vkUser_easyjson.go
+│   │   ├── microservice_ports
+│   │   │   └── ports.go
+│   │   └── response
+│   │       └── response.go
+│   ├── monitoring
+│   │   └── monitoring.go
+│   ├── pkg
+│   │   ├── auth
+│   │   │   └── delivery
+│   │   │       └── http
+│   │   │           ├── auth_handler.go
+│   │   │           └── auth_handler_test.go
+│   │   ├── email
+│   │   │   └── delivery
+│   │   │       └── http
+│   │   │           ├── email_handler.go
+│   │   │           └── handlersEmail_test.go
+│   │   ├── folder
+│   │   │   └── delivery
+│   │   │       └── http
+│   │   │           ├── folder_handler.go
+│   │   │           └── folder_handler_test.go
+│   │   ├── gmail
+│   │   │   ├── gmail_auth
+│   │   │   │   └── delivery
+│   │   │   │       └── http
+│   │   │   │           └── gmail_auth_handler.go
+│   │   │   └── gmail_handler
+│   │   │       └── delivery
+│   │   │           └── http
+│   │   │               ├── gmail_draft_handler.go
+│   │   │               ├── gmail_email_handler.go
+│   │   │               └── gmail_label_handler.go
+│   │   ├── logger
+│   │   │   ├── log.txt
+│   │   │   ├── logger.go
+│   │   │   └── logger_test.go
+│   │   ├── middleware
+│   │   │   ├── middleware.go
+│   │   │   └── middleware_test.go
+│   │   ├── oauth
+│   │   │   └── delivery
+│   │   │       └── http
+│   │   │           └── oauth_handler.go
+│   │   ├── questionnairy
+│   │   │   └── delivery
+│   │   │       └── http
+│   │   │           ├── question_handler.go
+│   │   │           └── question_handler_test.go
+│   │   ├── session
+│   │   │   ├── interface
+│   │   │   │   └── imanager.go
+│   │   │   ├── manager.go
+│   │   │   ├── manager_test.go
+│   │   │   └── mock
+│   │   │       └── manager_mock.go
+│   │   ├── user
+│   │   │   └── delivery
+│   │   │       └── http
+│   │   │           ├── user_handler.go
+│   │   │           └── user_handler_test.go
+│   │   └── utils
+│   │       ├── check_file_type
+│   │       │   ├── check_file_type.go
+│   │       │   └── check_file_type_test.go
+│   │       ├── check_image
+│   │       │   └── check_image.go
+│   │       ├── connect_microservice
+│   │       │   └── connect.go
+│   │       ├── constants
+│   │       │   └── constants.go
+│   │       ├── generate_filename
+│   │       │   ├── generate_filename.go
+│   │       │   └── generate_filename_test.go
+│   │       ├── sanitize
+│   │       │   ├── sanitize_string.go
+│   │       │   └── sanitize_string_test.go
+│   │       └── validators
+│   │           ├── validator.go
+│   │           └── validator_test.go
+│   ├── smtp_server
+│   │   ├── Dockerfile
+│   │   ├── docker-compose.yml
+│   │   ├── emailSMTP.go
+│   │   ├── go.mod
+│   │   ├── go.sum
+│   │   └── main.go
+│   └── websocket
+│       ├── client.go
+│       ├── room.go
+│       └── websocket.go
+├── monitoring
+│   └── prometheus
+│       └── prometheus.yml
+└── token.json
+
+113 directories, 238 files
