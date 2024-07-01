@@ -1,5 +1,4 @@
-# 2024_1_Refugio
-Backend проекта Почта команды Refugio
+Backend проекта MailHub
 
 # Авторы
 * [Алексей Хоченков](https://github.com/AlexKhochenkov) - _frontend_
@@ -14,9 +13,6 @@ Backend проекта Почта команды Refugio
 #  Frontend
 * [Frontend](https://github.com/frontend-park-mail-ru/2024_1_Refugio)
 
-# Полезные ссылки
-* [Miro](https://miro.com/app/board/uXjVNq0P_Ys=/)
-
-# Наш проект
+# Проект
 * https://mailhub.su/swagger/index.html
 * https://mailhub.su
